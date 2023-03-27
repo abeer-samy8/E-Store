@@ -45,22 +45,31 @@ let products = JSON.parse(localStorage.getItem('products')) || [
 
 
 
-function displayProducts() {
+
+let searchInput = document.getElementById("search-input");
+searchInput.addEventListener("input", filterProducts);
+
+function filterProducts() {
+  let searchValue = searchInput.value.trim().toLowerCase();
+  let filteredProducts = products.filter(product => {
+    return product.title.toLowerCase().includes(searchValue) ||
+           product.price.toString().includes(searchValue);
+  });
+  displayFilteredProducts(filteredProducts);
+}
+
+function displayFilteredProducts(filteredProducts) {
   let productContainer = document.getElementById("product-container");
-  if (productContainer) {
+  productContainer.innerHTML = "";
 
-// You should loop through your products array and for each product you should
-//  create a new card, which should show the image for the products, along with the other detailes.
+  for (let i = 0; i < filteredProducts.length; i++) {
+    let product = filteredProducts[i];
 
-  for (let i = 0; i < products.length; i++) {
-    let product = products[i];
-
-    let card = document.createElement("div");
+        let card = document.createElement("div");
     card.classList.add("col-12", "col-md-4", "col-lg-3", "mb-5");
 
     let productLink = document.createElement("a");
     productLink.classList.add("product-item");
-   // productLink.href = "cart.html";
 
     let productImage = document.createElement("img");
     productImage.classList.add("img-fluid", "product-thumbnail");
@@ -74,17 +83,72 @@ function displayProducts() {
 
     let productPrice = document.createElement("strong");
     if (product.price) {
-        productPrice.textContent = "$" + product.price;
-      }
-
+      productPrice.textContent = "$" + product.price;
+    }
     productLink.appendChild(productPrice);
+
+    // Create the container for the buttons
+    let buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("d-flex", "justify-content-center", "my-3" ,"btn-div");
+
+    // Create the delete button
+    let deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.classList.add("btn", "btn-danger");
+    deleteButton.style.padding = "5px 10px";
+    deleteButton.style.fontSize = "14px";
+
+        deleteButton.addEventListener("click", function() {
+            // Find the index of the product to delete
+            const index = products.findIndex(p => p.id === product.id);
+
+            // Remove the product from the array
+            if (index !== -1) {
+              products.splice(index, 1);
+
+              // Update the localStorage
+              localStorage.setItem("products", JSON.stringify(products));
+
+              // Remove the card from the UI
+              card.remove();
+
+            }
+            alert('Product deleted successfully!');
+
+          });
+
+    buttonContainer.appendChild(deleteButton);
+
+    // Create the update button
+    let updateButton = document.createElement("button");
+    updateButton.textContent = "Update";
+    updateButton.classList.add("btn", "btn-primary");
+    updateButton.style.padding = "5px 10px"; // Set the padding of the button
+    updateButton.style.fontSize = "14px";
+    updateButton.style.marginLeft = "10px";
+
+
+
+    updateButton.addEventListener("click", function() {
+
+
+      });
+
+
+
+
+
+
+
+    buttonContainer.appendChild(updateButton);
+
+    // Append the button container to the product link
+    productLink.appendChild(buttonContainer);
 
     let crossIcon = document.createElement("span");
     crossIcon.classList.add("icon-cross");
 
     let crossImage = document.createElement("img");
-
-
 
     crossImage.classList.add("img-fluid");
     crossImage.src = "images/cross.svg";
@@ -93,6 +157,131 @@ function displayProducts() {
     productLink.appendChild(crossIcon);
     card.appendChild(productLink);
     productContainer.appendChild(card);
+
+
+
+    productContainer.appendChild(card);
+  }
+}
+
+// Function to update a product
+function updateProduct(id, title, price, description, category, count, image) {
+    const product = products.find(p => p.id === id);
+    if (product) {
+      product.title = title;
+      product.price = price;
+      product.description = description;
+      product.category = category;
+      product.count = count;
+      product.image = image;
+    }
+    localStorage.setItem('products', JSON.stringify(products));
+  }
+
+
+function displayProducts() {
+  let productContainer = document.getElementById("product-container");
+  if (productContainer) {
+
+// You should loop through your products array and for each product you should
+//  create a new card, which should show the image for the products, along with the other detailes.
+
+  for (let i = 0; i < products.length; i++) {
+    let product = products[i];
+
+    let card = document.createElement("div");
+card.classList.add("col-12", "col-md-4", "col-lg-3", "mb-5");
+
+let productLink = document.createElement("a");
+productLink.classList.add("product-item");
+// productLink.href = "cart.html";
+
+let productImage = document.createElement("img");
+productImage.classList.add("img-fluid", "product-thumbnail");
+productImage.src = product.image;
+productLink.appendChild(productImage);
+
+let productTitle = document.createElement("h3");
+productTitle.classList.add("product-title");
+productTitle.textContent = product.title;
+productLink.appendChild(productTitle);
+
+let productPrice = document.createElement("strong");
+if (product.price) {
+  productPrice.textContent = "$" + product.price;
+}
+productLink.appendChild(productPrice);
+
+// Create the container for the buttons
+let buttonContainer = document.createElement("div");
+buttonContainer.classList.add("d-flex", "justify-content-center", "my-3" ,"btn-div");
+
+// Create the delete button
+let deleteButton = document.createElement("button");
+deleteButton.textContent = "Delete";
+deleteButton.classList.add("btn", "btn-danger");
+deleteButton.style.padding = "5px 10px";
+deleteButton.style.fontSize = "14px";
+
+    deleteButton.addEventListener("click", function() {
+        // Find the index of the product to delete
+        const index = products.findIndex(p => p.id === product.id);
+
+        // Remove the product from the array
+        if (index !== -1) {
+          products.splice(index, 1);
+
+          // Update the localStorage
+          localStorage.setItem("products", JSON.stringify(products));
+
+          // Remove the card from the UI
+          card.remove();
+
+        }
+        alert('Product deleted successfully!');
+
+      });
+
+buttonContainer.appendChild(deleteButton);
+
+// Create the update button
+let updateButton = document.createElement("button");
+updateButton.textContent = "Update";
+updateButton.classList.add("btn", "btn-primary");
+updateButton.style.padding = "5px 10px"; // Set the padding of the button
+updateButton.style.fontSize = "14px";
+updateButton.style.marginLeft = "10px";
+
+
+
+updateButton.addEventListener("click", function() {
+
+  });
+
+
+
+
+
+
+
+buttonContainer.appendChild(updateButton);
+
+// Append the button container to the product link
+productLink.appendChild(buttonContainer);
+
+let crossIcon = document.createElement("span");
+crossIcon.classList.add("icon-cross");
+
+let crossImage = document.createElement("img");
+
+crossImage.classList.add("img-fluid");
+crossImage.src = "images/cross.svg";
+
+crossIcon.appendChild(crossImage);
+productLink.appendChild(crossIcon);
+card.appendChild(productLink);
+productContainer.appendChild(card);
+
 
   }
 }

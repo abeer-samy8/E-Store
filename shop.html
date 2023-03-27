@@ -83,23 +83,26 @@
 			</div>
 		<!-- End Hero Section -->
 
-        <!-- <div class="col-md-6">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newProductModal"  id="newProductButton" style="margin-top: 30px; margin-left: 120px;">Add New Product</button>
-
-            <button class="btn btn-outline-black btn-sm btn-block"  id="shop-btn" style="margin-top: 30px; margin-left: 120px;">NEW PRODUCT</button>
-            <script>
-              const shopBtn = document.querySelector('#shop-btn');
-              shopBtn.addEventListener('click', () => {
-                window.location.href = 'newProduct.html';
-              });
-            </script>
-
-          </div> -->
 
 
+
+
+
+
+        <div class="row">
+            <div class="col">
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newProductModal" style="margin-top: 30px; margin-left: 120px;">
             New Product
           </button>
+        </div>
+          <div class="col">
+            <input type="text" id="search-input" class="form-control" placeholder="Filter by name or price ..." style="width: 550px; margin-top: 30px;">
+        </div>
+         </div>
+
+
+
+
 
           <div class="modal fade" id="newProductModal" tabindex="-1" aria-labelledby="newProductModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -117,6 +120,7 @@
                     <div class="mb-3">
                       <label for="price" class="form-label">Price</label>
                       <input type="number" class="form-control" id="price" name="price" required>
+
                     </div>
                     <div class="mb-3">
                       <label for="description" class="form-label">Description</label>
@@ -187,7 +191,8 @@
 
                     // Clear the form inputs
                     form.reset();
-
+                    const modal = bootstrap.Modal.getInstance(document.querySelector("#newProductModal"));
+                    modal.hide();
                     console.log(products);
                     // Display a success message to the user
                     alert('Product added successfully!');
@@ -207,6 +212,8 @@
     <div class="untree_co-section product-section before-footer-section">
 		    <div class="container">
         <div id="product-container" class="row">
+
+
         </div>
        </div>
     </div>
