@@ -153,57 +153,103 @@
 
 
 
-            <script>
-                // Load the products array from localStorage, or initialize it to an empty array
-                let product = JSON.parse(localStorage.getItem('products')) || [];
+          <script>
+            // Load the products array from localStorage, or initialize it to an empty array
+            let product = JSON.parse(localStorage.getItem('products')) || [];
 
-                const form = document.querySelector('form');
+            const form = document.querySelector('form');
 
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
 
-                    const title = document.querySelector('#title').value;
-                    const price = document.querySelector('#price').value;
-                    const description = document.querySelector('#description').value;
-                    const category = document.querySelector('#category').value;
-                    const count = document.querySelector('#count').value;
-                    const image = document.querySelector('#image').value;
+                const title = document.querySelector('#title').value;
+                const price = document.querySelector('#price').value;
+                const description = document.querySelector('#description').value;
+                const category = document.querySelector('#category').value;
+                const count = document.querySelector('#count').value;
+                const image = document.querySelector('#image').value;
 
-                    // Generate a new ID for the product
-                    const id = products.length + 1;
+                // Generate a new ID for the product
+                const id = products.length + 1;
 
-                    // Create a new product object
-                    const newProduct = {
-                        id,
-                        title,
-                        price,
-                        description,
-                        category,
-                        image,
-                        count: 0,
-                    };
+                // Create a new product object
+                const newProduct = {
+                    id,
+                    title,
+                    price,
+                    description,
+                    category,
+                    image,
+                    count: 0,
+                };
 
-                    // Add the new product to the products array
-                    products.push(newProduct);
+                // Add the new product to the products array
+                products.push(newProduct);
 
-                    // Save the updated products array to localStorage
-                    localStorage.setItem('products', JSON.stringify(products));
+                // Save the updated products array to localStorage
+                localStorage.setItem('products', JSON.stringify(products));
 
-                    // Clear the form inputs
-                    form.reset();
-                    const modal = bootstrap.Modal.getInstance(document.querySelector("#newProductModal"));
-                    modal.hide();
-                    console.log(products);
-                    // Display a success message to the user
-                    alert('Product added successfully!');
-                });
-
-
-                    </script>
+                // Clear the form inputs
+                form.reset();
+                const modal = bootstrap.Modal.getInstance(document.querySelector("#newProductModal"));
+                modal.hide();
+                console.log(products);
+                // Display a success message to the user
+                alert('Product added successfully!');
+            });
 
 
+                </script>
 
 
+
+
+<div class="modal fade" id="updateProductModal" tabindex="-1" aria-labelledby="updateProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateProductModalLabel">Update Product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="title1" name="title" required>
+            </div>
+            <div class="mb-3">
+              <label for="price" class="form-label">Price</label>
+              <input type="number" class="form-control" id="price1" name="price" required>
+
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description1" rows="3" name="description" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="category" class="form-label">Category</label>
+              <select class="form-select" id="category1"  name="category" required>
+                <option value="furniture">Furniture</option>
+                <option value="computers">Computers</option>
+                <option value="accessories">Accessories</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="count" class="form-label">Count</label>
+              <input type="number" class="form-control" id="count1" name="count" required>
+            </div>
+            <div class="mb-3">
+              <label for="image">Image URL</label>
+              <input type="text" class="form-control" id="image1" name="image" required>
+            </div>
+            <div class="mb-3">
+              <input type="submit" value="Update Product">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
