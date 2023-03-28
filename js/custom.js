@@ -471,6 +471,21 @@ function displayCart(){
 
         });
 
+        let quantityInputs = document.querySelectorAll('.quantity-amount');
+        quantityInputs.forEach(input => {
+          input.addEventListener('input', (event) =>
+          {
+            let productName = event.target.parentElement.parentElement.parentElement.querySelector('.product-name').textContent.trim();
+            let productCount = parseInt(event.target.value);
+            let cartItems = JSON.parse(localStorage.getItem('productInCart'));
+            let product = cartItems[productName];
+            product.count = productCount;
+            localStorage.setItem('productInCart', JSON.stringify(cartItems));
+            displayCart();
+            updateCartTotal();
+
+          });
+        });
 
 
   // add event listener to delete buttons
@@ -491,10 +506,22 @@ function displayCart(){
               onLoadCartNumbers();
           });
       }
+
+      function updateCartTotal() {
+        let cartItems = JSON.parse(localStorage.getItem('productInCart'));
+        let totalCost = 0;
+        Object.values(cartItems).forEach(item => {
+          totalCost += item.count * item.price;
+        });
+        localStorage.setItem('totalCost', totalCost);
+      }
+
   }
 
 
      if(cartItems && totalSection){
+        updateCartTotal();
+
         totalSection.innerHTML += `
         <div class="col-md-6 ">
         <span class="text-black">Total</span>
