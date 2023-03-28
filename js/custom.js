@@ -469,34 +469,29 @@ function displayCart(){
             </tr>
             `
 
-
-
         });
 
-        let quantityInputs = document.querySelectorAll('.quantity-amount');
-        quantityInputs.forEach(input => {
-          input.addEventListener('input', (event) =>
-          {
-            let productName = event.target.parentElement.parentElement.parentElement.querySelector('.product-name').textContent.trim();
-            let productCount = parseInt(event.target.value);
-            let cartItems = JSON.parse(localStorage.getItem('productInCart'));
-            let product = cartItems[productName];
-            product.count = productCount;
-            localStorage.setItem('productInCart', JSON.stringify(cartItems));
-            displayCart();
-            updateCartTotal();
+       // add event listener to quantity input fields
+let quantityInputs = document.querySelectorAll('.quantity-amount');
+quantityInputs.forEach(input => {
+  input.addEventListener('input', (event) => {
+    let productName = event.target.parentElement.parentElement.parentElement.querySelector('.product-name').textContent.trim();
+    let productCount = parseInt(event.target.value);
+    let cartItems = JSON.parse(localStorage.getItem('productInCart'));
+    let product = cartItems[productName];
+    let oldProductCount = product.count;
+    product.count = productCount;
+    localStorage.setItem('productInCart', JSON.stringify(cartItems));
 
-          });
-        });
+    let productPrice = parseInt(event.target.parentElement.parentElement.previousElementSibling.textContent);
+    let cartCost = parseInt(localStorage.getItem('totalCost'));
+    let newCartCost = cartCost - (oldProductCount * productPrice) + (productCount * productPrice);
+    localStorage.setItem('totalCost', newCartCost);
 
-        function updateCartTotal() {
-            let cartItems = JSON.parse(localStorage.getItem('productInCart'));
-            let totalCost = 0;
-            Object.values(cartItems).forEach(item => {
-              totalCost += item.count * item.price;
-            });
-            localStorage.setItem('totalCost', totalCost);
-          }
+    displayCart();
+  });
+});
+
 
 
   // add event listener to delete buttons
@@ -518,12 +513,20 @@ function displayCart(){
           });
       }
 
-
+      function updateCartTotal() {
+        let cartItems = JSON.parse(localStorage.getItem('productInCart'));
+        let totalCost = 0;
+        Object.values(cartItems).forEach(item => {
+          totalCost += item.count * item.price;
+        });
+        localStorage.setItem('totalCost', totalCost);
+      }
 
   }
 
 
      if(cartItems && totalSection){
+        updateCartTotal();
 
         totalSection.innerHTML += `
         <div class="col-md-6 ">
@@ -535,7 +538,7 @@ function displayCart(){
         `
 
     }
-    updateCartTotal();
+
   }
 
 
