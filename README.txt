@@ -1,8 +1,22 @@
-Template Name: Furni
-Template Author: Untree.co
-Template License: https://creativecommons.org/licenses/by/3.0/
-Author URI: https://untree.co/
+In this project I creating a pretty E-store to flex  javascript and DOM manipulation skills. 
 
-Twitter: https://twitter.com/Untree_co
-Facebook: https://web.facebook.com/Untree.co/
-Pinterest: https://pinterest.com/Untree_co/
+Requirements:
+Good file structure.
+Pretty style.
+Use external CSS and JavaScript files.
+Use CSS Flexbox or CSS Grid.
+Use local storage to store product array.
+The site should contain some products.
+Upload project on github.
+Goals:
+Use and understand array methods.
+Flex your DOM skils.
+Upgrade your knowledge of GitHub.
+Use local storage.
+Write scalable and readable code.
+Write an apstact functions.
+Write clean code and readable code.
+Use Es6 javascript standerd.
+Use softwere enginering methods.
+And others.
+
